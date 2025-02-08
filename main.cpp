@@ -5,8 +5,6 @@
 
 using namespace std;
 
-
-
 //node definition
 struct node{
     vector<vector<int>> state;
@@ -144,6 +142,59 @@ int calculateMisplacedTiles(const vector<vector<int>>& currState){
         }
     }
     return counter;
+}
+
+
+int calculateDistance(int row, int col, int row2, int col2){
+    int distance = abs(row - row2) + abs(col - col2);
+}
+
+//find all missplaced tiles as coordinates. Store intoo a vector of misplaced tiles. iterate through vector and 
+int calculateManhattanDistance(const vector<vector<int>>& currState){
+    int manhattanDist = -1; //should never stay -1
+    for(int i =0; i < currState.size(); i++){
+        for(int j = 0; j < currState.size(); j++){
+            if(currState[i][j] != Goal_State[i][j]){
+                switch (currState[i][j]){
+                    case 1:
+                    manhattanDist = calculateDistance(i, j, 1, 1);
+                    break;
+
+                    case 2:
+                    manhattanDist = calculateDistance(i, j, 1, 2);
+                    break;
+
+                    case 3:
+                    manhattanDist = calculateDistance(i, j, 1, 3);
+                    break;
+
+                    case 4:
+                    manhattanDist = calculateDistance(i, j, 2, 1);
+                    break;
+
+                    case 5:
+                    manhattanDist = calculateDistance(i, j, 2, 2);
+                    break;
+
+                    case 6:
+                    manhattanDist = calculateDistance(i, j, 2, 3);
+                    break;
+
+                    case 7:
+                    manhattanDist = calculateDistance(i, j, 3, 1);
+                    break;
+
+                    case 8:
+                    manhattanDist = calculateDistance(i, j, 3, 2);
+                    break;
+                }
+
+            }
+        }
+        return manhattanDist;
+    }
+
+
 }
 
 
