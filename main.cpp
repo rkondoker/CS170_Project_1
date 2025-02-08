@@ -22,7 +22,7 @@ struct node{
 //comparison function to use in priority queue
 struct compareCost{
     bool operator()(const node* a, const node* b)const{
-        return a->cost < b->cost;
+        return a->cost > b->cost;
     }
 };
 
@@ -32,7 +32,7 @@ vector<vector<int>> Goal_State = {{1,2,3},
                                   {7,8,0}};
 
 
-vector<vector<int>> Default_Start = {{1,2,3},
+vector<vector<int>> Default_Start = {{1,2, 3},
                                     {5, 0, 6},
                                     {4, 7, 8}};
 
@@ -159,7 +159,7 @@ void uniformCostSearch(const vector<vector<int>>& startState){
         if(checkGoal(currState)){
             cout << "Puzzle Solved! " << endl;
             printTree(currNode);
-            cout << "Move count: " << count << endl;
+            cout << "Nodes Expanded: " << count << endl;
             return;
         }
         //check if its a visited state. If so break iteration of while lopp and move to nect node
