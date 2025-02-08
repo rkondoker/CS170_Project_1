@@ -22,7 +22,7 @@ struct node{
 //comparison function to use in priority queue
 struct compareCost{
     bool operator()(const node* a, const node* b)const{
-        return a->cost > b->cost;
+        return a->cost < b->cost;
     }
 };
 
@@ -139,6 +139,10 @@ int calculateMisplacedTiles(const vector<vector<int>>& currState){
     }
     return counter;
 }
+
+
+
+
 
 void uniformCostSearch(const vector<vector<int>>& startState){
     priority_queue<node*, vector<node*>, compareCost>  pq;    //create queue of nodes, stored in a vector, based on cost comparator
