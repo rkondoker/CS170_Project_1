@@ -26,6 +26,12 @@ struct compareCost{
     }
 };
 
+struct compareHeuristic{
+    bool operator()(const node* a, const node* b)const{
+        return a->cost + a->heauristic > b->cost + b->heauristic;
+    }
+};
+
 //Goal state vector
 vector<vector<int>> Goal_State = {{1,2,3},
                                   {4,5,6},
