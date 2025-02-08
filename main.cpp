@@ -147,6 +147,7 @@ int calculateMisplacedTiles(const vector<vector<int>>& currState){
 
 int calculateDistance(int row, int col, int row2, int col2){
     int distance = abs(row - row2) + abs(col - col2);
+    return distance;
 }
 
 //find all missplaced tiles as coordinates. Store intoo a vector of misplaced tiles. iterate through vector and 
@@ -191,12 +192,52 @@ int calculateManhattanDistance(const vector<vector<int>>& currState){
 
             }
         }
-        return manhattanDist;
+        
     }
+    return manhattanDist;
 
 
 }
 
+
+void manhattanDistanceSearch(const vector<vector< int>>& startState){
+    priority_queue<node*, vector<node*>, compareHeuristic>  pq;
+    node* start_node = new node(startState, nullptr, 0, calculateManhattanDistance(startState)); //cost 0 moves to get to start state
+    set<vector<vector<int>>> visitedStates;
+    pq.push(start_node);
+    int count = 0;
+    while(!pq.empty()){ //check for empty or failure
+
+        node* currNode = pq.top();
+        pq.pop();   // remove front 
+        vector<vector<int>> currState = currNode->state;
+        //Check win condition
+        if(checkGoal(currState)){
+            cout << "Puzzle Solved! " << endl;
+            printTree(currNode);
+            cout << "Nodes Expanded: " << count << endl;
+            return;
+        }
+        //check if its a visited state. If so break iteration of while lopp and move to nect node
+        if(visitedStates.find(currState) != visitedStates.end()){
+            delete currNode;
+            continue;
+        }
+        //if not visited add to visited set
+        visitedStates.insert(currState);
+        //since unvsited and not goal state, generate all next states
+        vector<vector<vector<int>>> nextMoves = possibleMoves(currState);
+        for(int i = 0; i < nextMoves.size();i++){
+            node* newNode = new node(nextMoves.at(i), currNode, currNode->cost + 1, calculateManhattanDistance(nextMoves.at(i)));
+            pq.push(newNode);
+        }
+        count++;
+    }
+    //loop breaks when queue is empty meaning no solution
+    cout << "Puzzle Unsolvable" << endl;
+
+
+}
 
 void misplacedTileSearch(const vector<vector<int>>& startState){
     priority_queue<node*, vector<node*>, compareHeuristic>  pq;
@@ -317,6 +358,12 @@ int main(){
     }
     else if(searchInput == 2){
         misplacedTileSearch(inputStart);
+    }
+    else if(searchInput == 3){
+        manhattanDistanceSearch(inputStart);
+    }
+    else {
+        cout << "invalid" << endl;
     }
 
 
