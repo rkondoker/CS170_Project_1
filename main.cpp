@@ -36,9 +36,9 @@ vector<vector<int>> Goal_State = {{1,2,3},
                                   {7,8,0}};
 
 
-vector<vector<int>> Default_Start = {{1,2, 3},
-                                    {5, 0, 6},
-                                    {4, 7, 8}};
+vector<vector<int>> Default_Start = {{1,2,3},
+                                    {5,0,6},
+                                    {4,7,8}};
 
 vector<pair<int, int>> MOVES {{0, -1}, {0, 1}, {-1,0}, {1, 0}};
 //Moves list 
@@ -83,6 +83,7 @@ void printTree(node* solNode){
         printState(solutionPath.at(i)->state);
          
     }
+    cout << "Solution depth: " << solutionPath.size()-1 << " ";
     
 }
 
@@ -141,7 +142,9 @@ int calculateMisplacedTiles(const vector<vector<int>>& currState){
     for(int i = 0; i < 3; i++){
         for(int j = 0; j < 3; j++){
             if(currState.at(i).at(j) != Goal_State.at(i).at(j)){
-                counter++;
+                if(currState[i][j] != 0){
+                    counter++;
+                }
             }
         }
     }
